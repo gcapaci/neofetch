@@ -1,0 +1,180 @@
+[4mNVIM[24m(1)                                                                         General Commands Manual                                                                        [4mNVIM[24m(1)
+
+[1mNAME[0m
+       nvim — edit text
+
+[1mSYNOPSIS[0m
+       [1mnvim [22m[[4moptions[24m] [[4mfile[24m [4m...[24m]
+       [1mnvim [22m[[4moptions[24m] [1m-[0m
+       [1mnvim [22m[[4moptions[24m] [1m-t [4m[22mtag[0m
+       [1mnvim [22m[[4moptions[24m] [1m-q [22m[[4merrorfile[24m]
+
+[1mDESCRIPTION[0m
+       [1mnvim [22mis a text editor based on Vim.  Start [1mnvim [22mfollowed by any number of options and/or files:
+
+             [1mnvim [options] [file ...][0m
+
+       Commands in [1mnvim [22mbegin with colon (‘:’).  Type “:help subject” to get help on a specific subject.  Use <Tab> and CTRL-D to complete subjects (“:help cmdline-completion”).
+
+       The “quickref” help section is a condensed reference of editor features:
+             [1m:help quickref[0m
+
+       If you are new to Vim/Nvim, start with the 30-minute tutorial:
+             [1m:Tutor[0m
+
+       After installing/updating Nvim, it's a good idea to run the self-check:
+             [1m:checkhealth[0m
+
+       [4mfile[24m [4m...[24m    File(s) to edit.  Opens one buffer per file.  To switch between buffers, use the [1m:next [22mand [1m:previous [22mcommands.
+
+       [1m-           [22mReads text from standard input until EOF, then opens a buffer with that text.  User input is read from standard error, which should be a terminal.
+
+[1mOPTIONS[0m
+       [1m-t [4m[22mtag[24m      Finds  [4mtag[24m  in the tags file, the associated file becomes the current file and the associated command is executed.  Cursor is positioned at the tag location in the
+                   file.  [1m:help tag-commands[0m
+
+       [1m-q [22m[[4merrorfile[24m]
+                   QuickFix mode.  Display the first error in [4merrorfile[24m.  If [4merrorfile[24m is omitted, the value of the 'errorfile' option is used (defaults to [1merrors.err[22m).  Further  er‐
+                   rors can be jumped to with the [1m:cnext [22mcommand.  [1m:help quickfix[0m
+
+       [1m--          [22mEnd of options.  Remaining arguments are treated as literal file names, including filenames starting with hyphen (‘-’).
+
+       [1m-e          [22mEx mode, reading stdin as Ex commands.  [1m:help Ex-mode[0m
+
+       [1m-E          [22mEx mode, reading stdin as text.  [1m:help Ex-mode[0m
+
+       [1m-es         [22mSilent (non-interactive) Ex mode, reading stdin as Ex commands.  Useful for scripting because it does NOT start a UI, unlike [1m-e[22m.  [1m:help silent-mode[0m
+
+       [1m-Es         [22mSilent (non-interactive) Ex mode, reading stdin as text.  Useful for scripting because it does NOT start a UI, unlike [1m-E[22m.  [1m:help silent-mode[0m
+
+       [1m-d          [22mDiff mode.  Show the difference between two to eight files, similar to [4msdiff[24m(1).  [1m:help diff[0m
+
+       [1m-R          [22mRead-only  mode.  Sets the 'readonly' option.  Implies [1m-n[22m.  Buffers can still be edited, but cannot be written to disk if already associated with a file.  To over‐
+                   write a file, add an exclamation mark to the relevant Ex command, such as [1m:w![22m.  [1m:help 'readonly'[0m
+
+       [1m-m          [22mResets the 'write' option, to disable file modifications.  Writing to a file is disabled, but buffers can still be modified.
+
+       [1m-M          [22mResets the 'write' and 'modifiable' options, to disable file and buffer modifications.
+
+       [1m-b          [22mBinary mode.  [1m:help edit-binary[0m
+
+       [1m-A          [22mArabic mode.  Sets the 'arabic' option.
+
+       [1m-H          [22mHebrew mode.  Sets the 'hkmap' and 'rightleft' options.
+
+       [1m-V[22m[[4mN[24m][[4mfile[24m]
+                   Verbose mode.  Prints debug messages.  [4mN[24m is the 'verbose' level, defaults to [1m10[22m.  If [4mfile[24m is specified, append messages to [4mfile[24m instead of  printing  them.   [1m:help[0m
+                   [1m'verbose'[0m
+
+       [1m-D          [22mVimscript debug mode.  Started when executing the first command from a script.  [1m:help debug-mode[0m
+
+       [1m-n          [22mDisable the use of swap files.  Sets the 'updatecount' option to [1m0[22m.  Can be useful for editing files on a slow medium.
+
+       [1m-r [22m[[4mfile[24m]   Recovery  mode.   If  [4mfile[24m is omitted then list swap files with recovery information.  Otherwise the swap file [4mfile[24m is used to recover a crashed session.  The swap
+                   file has the same name as the file it's associated with, but with ‘.swp’ appended.  [1m:help recovery[0m
+
+       [1m-L [22m[[4mfile[24m]   Alias for [1m-r[22m.
+
+       [1m-u [4m[22mvimrc[24m    Use [4mvimrc[24m instead of the default [4m~/.config/nvim/init.vim[24m.  If [4mvimrc[24m is [1mNORC[22m, do not load any initialization files (except plugins).  If [4mvimrc[24m is [1mNONE[22m, loading plu‐
+                   gins is also skipped.  [1m:help initialization[0m
+
+       [1m-i [4m[22mshada[24m    Use [4mshada[24m instead of the default [4m~/.local/state/nvim/shada/main.shada[24m.  If [4mshada[24m is [1mNONE[22m, do not read or write a ShaDa file.  [1m:help shada[0m
+
+       [1m--noplugin  [22mSkip loading plugins (by setting the 'noloadplugins' option).  Implied by [1m-u NONE[22m.
+
+       [1m--clean     [22mStart Nvim with “factory defaults” (no user config and plugins, no shada).  [1m:help --clean[0m
+
+       [1m-o[22m[[4mN[24m]       Open [4mN[24m windows stacked horizontally.  If [4mN[24m is omitted, open one window for each file.  If [4mN[24m is less than the number of file arguments,  allocate  windows  for  the
+                   first [4mN[24m files and hide the rest.
+
+       [1m-O[22m[[4mN[24m]       Like [1m-o[22m, but tile windows vertically.
+
+       [1m-p[22m[[4mN[24m]       Like [1m-o[22m, but for tab pages.
+
+       [1m+[22m[[4mlinenum[24m]  For the first file, position the cursor on line [4mlinenum[24m.  If [4mlinenum[24m is omitted, position the cursor on the last line of the file.  [1m+5 [22mand [1m-c 5 [22mon the command-line
+                   are equivalent to [1m:5 [22minside [1mnvim[22m.
+
+       [1m+/[22m[[4mpattern[24m]
+                   For  the first file, position the cursor on the first occurrence of [4mpattern[24m.  If [4mpattern[24m is omitted, the most recent search pattern is used (if any).  [1m+/foo [22mand [1m-c[0m
+                   [1m/foo [22mon the command-line are equivalent to [1m/foo [22mand [1m:/foo [22minside [1mnvim[22m.  [1m:help search-pattern[0m
+
+       [1m+[4m[22mcommand[24m, [1m-c [4m[22mcommand[0m
+                   Execute [4mcommand[24m after reading the first file.  Up to 10 instances allowed.  "[1m+foo[22m" and [1m-c "foo" [22mare equivalent.
+
+       [1m--cmd [4m[22mcommand[0m
+                   Like [1m-c[22m, but execute [4mcommand[24m before processing any vimrc.  Up to 10 instances of these can be used independently from instances of [1m-c[22m.
+
+       [1m-l [4m[22mscript[24m [[4margs[24m]
+                   Execute Lua [4mscript[24m with optional [[4margs[24m] after processing any preceding Nvim startup arguments.  All [[4margs[24m] are treated as script arguments and are passed literally
+                   to Lua, that is, [1m-l [22mstops processing of Nvim arguments.  [1m:help -l[0m
+
+       [1m-S [22m[[4msession[24m]
+                   Execute [4msession[24m after the first file argument has been read.  If [4msession[24m filename ends with [4m.lua[24m it is executed as Lua instead  of  Vimscript.   Equivalent  to  [1m-c[0m
+                   [1m"source session"[22m.  [4msession[24m cannot start with a hyphen (‘-’).  If [4msession[24m is omitted then [4mSession.vim[24m is used, if found.  [1m:help session-file[0m
+
+       [1m-s [4m[22mscriptin[0m
+                   Read  normal  mode  commands from [4mscriptin[24m.  The same can be done with the command [1m:source! scriptin[22m.  If the end of the file is reached before [1mnvim [22mexits, further
+                   characters are read from the keyboard.
+
+       [1m-w [4m[22mscriptout[0m
+                   Append all typed characters to [4mscriptout[24m.  Can be used for creating a script to be used with [1m-s [22mor [1m:source![22m.
+
+       [1m-W [4m[22mscriptout[0m
+                   Like [1m-w[22m, but truncate [4mscriptout[24m.
+
+       [1m--startuptime [4m[22mfile[0m
+                   During startup, append timing messages to [4mfile[24m.  Can be used to diagnose slow startup times.
+
+       [1m--api-info  [22mDump API metadata serialized to msgpack and exit.
+
+       [1m--embed     [22mUse standard input and standard output as a msgpack-rpc channel.  [1m:help --embed[0m
+
+       [1m--headless  [22mDo not start a UI.  When supplied with [1m--embed [22mthis implies that the embedding application does not intend to (immediately) start a UI.  Also useful for “scraping”
+                   messages in a pipe.  [1m:help --headless[0m
+
+       [1m--listen [4m[22maddress[0m
+                   Start RPC server on this pipe or TCP socket.
+
+       [1m-h[22m, [1m--help  [22mPrint usage information and exit.
+
+       [1m-v[22m, [1m--version[0m
+                   Print version information and exit.
+
+[1mENVIRONMENT[0m
+       NVIM_APPNAME
+                   The name of sub-directories used within each XDG user directory.  Defaults to [1mnvim[22m.  [1m:help $NVIM_APPNAME[0m
+
+       NVIM_LOG_FILE
+                   Low-level log file, usually found at [4m~/.local/state/nvim/log[24m.  [1m:help $NVIM_LOG_FILE[0m
+
+       VIM         Used to locate user files, such as init.vim.  System-dependent.  [1m:help $VIM[0m
+
+       VIMRUNTIME  Used to locate runtime files (documentation, syntax highlighting, etc.).
+
+       XDG_CONFIG_HOME
+                   Path to the user-local configuration directory, see “FILES”.  Defaults to [4m~/.config[24m.  [1m:help xdg[0m
+
+       XDG_STATE_HOME
+                   Like XDG_CONFIG_HOME, but used to store data not generally edited by the user, namely swap, backup, and ShaDa files.  Defaults to [4m~/.local/state[24m.  [1m:help xdg[0m
+
+       XDG_DATA_HOME
+                   Like XDG_CONFIG_HOME, but used to store data not generally edited by the user, things like runtime files.  Defaults to [4m~/.local/share[24m.  [1m:help xdg[0m
+
+       VIMINIT     Ex commands to be executed at startup.  [1m:help VIMINIT[0m
+
+       SHELL       Used to initialize the 'shell' option, which decides the default shell used by features like [1m:terminal[22m, [1m:![22m, and [1msystem()[22m.
+
+[1mFILES[0m
+       [4m~/.config/nvim/init.lua[24m  User-local [1mnvim [22mLua configuration file.
+
+       [4m~/.config/nvim[24m           User-local [1mnvim [22mconfiguration directory.  See also XDG_CONFIG_HOME.
+
+       [4m$VIM/sysinit.vim[24m         System-global [1mnvim [22mconfiguration file.
+
+       [4m$VIM[24m                     System-global [1mnvim [22mruntime directory.
+
+[1mAUTHORS[0m
+       Nvim was started by Thiago de Arruda.  Most of Vim was written by Bram Moolenaar.  Vim is based on Stevie, worked on by Tim Thompson, Tony Andrews,  and  G.R.  (Fred)  Walter.
+       [1m:help credits[0m
+
+Debian                                                                             December 17, 2017                                                                           [4mNVIM[24m(1)
